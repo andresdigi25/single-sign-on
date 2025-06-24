@@ -1,4 +1,3 @@
-![IntegriChain Logo](https://www.integrichain.com/wp-content/uploads/2019/03/integrichain-logo.svg)
 
 # SSO API
 
