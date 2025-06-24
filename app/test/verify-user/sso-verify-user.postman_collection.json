@@ -1,0 +1,212 @@
+{
+	"info": {
+		"_postman_id": "ccc07c32-6bd9-4d54-8444-6b374fe0df66",
+		"name": "sso-verify-user",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Verify User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const userNotVerified = () => {",
+							"    let response = pm.response.json();",
+							"",
+							"    if (response.UserStatus !== \"CONFIRMED\") {",
+							"        let email_attribute = response.UserAttributes.filter(object => object.Name === \"email\");",
+							"  ",
+							"        return email_attribute[0].Value;",
+							"    } else {",
+							"        return undefined;",
+							"    };",
+							"};",
+							"",
+							"const getNickname = () => {",
+							"    let nickname_attribute = pm.response.json().UserAttributes.filter(object => object.Name === \"nickname\");",
+							"    return nickname_attribute[0].Value;",
+							"};",
+							"",
+							"pm.collectionVariables.set(\"userEmail\", userNotVerified());",
+							"pm.collectionVariables.set(\"userNickname\", getNickname());"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{apiUrl}}/users/attributes/:email",
+					"host": [
+						"{{apiUrl}}"
+					],
+					"path": [
+						"users",
+						"attributes",
+						":email"
+					],
+					"variable": [
+						{
+							"key": "email",
+							"value": "sposada@integrichain.com"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200,201,500]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "x-icyte-token-auth={{token}}",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Authorization",
+						"value": "{{apiKey}}",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"{{userEmail}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{apiUrl}}/users/",
+					"host": [
+						"{{apiUrl}}"
+					],
+					"path": [
+						"users",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Resend Invitation",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200,201,500]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"let randomString = `${Math.random().toString(36).slice(2)}${Math.random().toString(36).toUpperCase()}!`",
+							"pm.collectionVariables.set(\"tempPassword\", randomString);",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{apiKey}}",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"nickname\": \"{{userNickname}}\",\n  \"email\": \"{{userEmail}}\",\n  \"password\": \"{{tempPassword}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{apiUrl}}/users/",
+					"host": [
+						"{{apiUrl}}"
+					],
+					"path": [
+						"users",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "apiKey",
+			"value": "t']w3&f%f!h;~PY$",
+			"type": "default"
+		},
+		{
+			"key": "userEmail",
+			"value": ""
+		},
+		{
+			"key": "userNickname",
+			"value": ""
+		},
+		{
+			"key": "tempPassword",
+			"value": ""
+		}
+	]
+}

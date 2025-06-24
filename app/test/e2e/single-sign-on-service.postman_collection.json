@@ -1,0 +1,887 @@
+{
+	"info": {
+		"_postman_id": "0f3506be-ab39-49b1-91b8-d020c3db469f",
+		"name": "single-sign-on-service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25329536"
+	},
+	"item": [
+		{
+			"name": "Post_login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let responseData=pm.response.json();",
+							"console.log(responseData);",
+							"pm.environment.set(\"token\", responseData.access_token);",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"{{email}}\",\n  \"password\": \"{{password}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{api_environment}}users/login",
+					"host": [
+						"{{api_environment}}users"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get_users_me",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let responseData=pm.response.json();",
+							"console.log(responseData);",
+							"pm.environment.set(\"user\", responseData.nickname);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "x-icyte-token-auth={{token}}",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "authorization",
+						"value": "{{authorization}}",
+						"type": "default"
+					},
+					{
+						"key": "Cookie",
+						"value": "x-icyte-token-auth-dev=eyJraWQiOiI3S29xUjYwSlVsSVZaclhUenAzRWhpbEdnbTVPQVdqOW50K3V1UzdNK0cwPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiI1MDRhZjNiMi04ZGE1LTRmYjYtYjUyNS1iNGY0ZmIzM2ZiMjciLCJldmVudF9pZCI6IjMyZmZjYThmLTczNjAtNDdlNi1hZDYzLTE2NDllNGU1ZTZjMCIsInRva2VuX3VzZSI6ImFjY2VzcyIsInNjb3BlIjoiYXdzLmNvZ25pdG8uc2lnbmluLnVzZXIuYWRtaW4iLCJhdXRoX3RpbWUiOjE2Njk3NTMwODAsImlzcyI6Imh0dHBzOlwvXC9jb2duaXRvLWlkcC51cy1lYXN0LTEuYW1hem9uYXdzLmNvbVwvdXMtZWFzdC0xXzk2Vzl3UVl5RCIsImV4cCI6MTY2OTc1NjY4MCwiaWF0IjoxNjY5NzUzMDgwLCJqdGkiOiJjNjAyNjk1Ny02M2NiLTRlZTAtYTE0MS1kZWY0ZmU0OTEyYzQiLCJjbGllbnRfaWQiOiIydGtjNWhsYXJlazltbmZlY2lnaTYyN3NhNyIsInVzZXJuYW1lIjoiNTA0YWYzYjItOGRhNS00ZmI2LWI1MjUtYjRmNGZiMzNmYjI3In0.x9Za5R0FLayCHeF3c12ryZe4BczBaFIekXqsFa95Et9Ien-HCk2FRGgeWrXqDVbpa0SQpj2m1f8Vx811UB3XP4A-u9d5crFm3GJHv2Qtl0e1pfQXnwwDDZLQJub2kKF5h66aCuRLQTbFEWZM_OPpHzQMTAmi_dvMFfqZrobfkR6OCy5thMhS_w6iMJNGGuxUCf5gWvlnYzh1avg4v6XQYCIrfNbzzMzoxv2EL7Nf-u4XhPHkyD3wuDHokfAWDiSI7FFrLwaXzZMYmGveuY4hF20Hh1AoSkceUhbk99Ov4JI7sRJAY2_JVr2uIFsmkJ-Zhp40re4BlnPHgj4UfsBaIQ; x-icyte-refresh-auth-dev=eyJjdHkiOiJKV1QiLCJlbmMiOiJBMjU2R0NNIiwiYWxnIjoiUlNBLU9BRVAifQ.ob0Zvg12PEceBCVUa8z63UyJZAlepVw_yzkYG2utPwKSDWTBuXpaLucDYvl9-ye4FzDxu4NfOgXKo32oKtRNA_NtKCm6-WoyzOpysqWXLDhcSKVE8XZeil__vm1Etw0HBdAzR6cZv02MDrUPzIm8WSyPW41MhqSdm2EG7D67V-JGgMS16iWpc8Gs-ymkYyg1osVOys14g6XW_hQ3vmwaiLWJ8NXefaDN5bqHHa-LsjLZxjCU4260PqTUkJHW-RB5ph3_KyWq7M514RwqO148DaI1KlxPEEB9XLxME8MtcIu-bJXQQAqWsWJ1yLazRcA1kCHRa-fmQoN-dI8hBj872g.rKhXidZpAUYfZXev.ck1sqnIivSrYFu3bBFV-q_EqZy9L3y0tWvyaGqmvdKm3ykQ8WjEVus5WO9R3kKOxDsTwObhY4HJ3Hun1r7QGlSMyDcSav8y7rEXH8s79UD8GwMjMKzQwmWkB_FZ5PNAp-0__c1XJbO_KogJv2lOMVWyOBYt-pTKxySjHfbXDY6GFGDHXAH4dOMIIVelBNzKxfF4m2sQVYgd_Au8GBzwyUmk5oVf5WQibFcypQMacK_kwO2gfdhrmPpihknXx0KQ6NArNuLjWy6afh-G9xDYRAH1u6kqhvtQURjXR04dww7sjScobbHcgxLH7Shkurmf1Nu6C_l0xufKl0ROjcRBSx_Ld0vG_MQIPQ3aPK0xT701KcSIAEU5Y71ahVrOCsVd88buCmnZewDX8G0vGhBYIf_Ab6TS4G9-Nisfj_0gdXPu3UxOLLzAqB8aHSeyg4Kiq0N1pQHDgHlE8tqDDHkBkpxm92R2xw12zFxQHFutBa6fEpTw35u1IjUU5M4Xb3TST-Z-TJq7osN3yVv_XjR7qS-OI-xMVnV9cg7DEMQJsbQU1qQbi8oQEo0xDAEYm3tE6H3CDzQwSK6doGZ1mTLobSCgpXAqDvAL-RwhBdqvfX9gdz8ATvSY8Th-AXDoC8qOqhDoDtVyP2Xs9Sp4OL8TWSlioSoEGOJmritr7ILRiN6Pom6VBmxWRFlPwd-3rt_KAQHKpjBd8UIKccnwpqav-vtKNrCesNZDK68BZQQ_GugOZy2KkEpUv2KbzUPrE2z1HsR5njSYAygcL3fMKJrFV5QTyJFsLLPWRTNYV-Ow3b9J3deU011cykEJ9_JT1gYRKZE0ZFvVbizX2Oif3Bqt952BqQChqrZuimcsNRFp9Nn-YjwPuBbtHGSaoUFOd5JWPJa6ZyQjpZmusGZnPdVjttEN81CidlJqn9vQ94eflt4OzqzcrqgNsWM62trGDfs5wtckCcpx205ygrxXBgF3X3pbilLsU8nLRNMbRu_G6_JBUzu1ZjQdStXEUSn8xj7FH3qCzLQx_voO5tIpe-LfqAuCphg1ykzZuKDr_Z0ygYPxqC8hc7SNaH8ZLh0XdnJOdM7NFP4rpOr9zb2x7jlmvvgL4ZlZChnfwDo4XNWzmO3MoN_Cs9S9gp1hrvetwYLzdjiHPkh0Py4hyf_9VUfQwV6ZG2b5_hSRAIxewpg3wotr2B8sbwSOGj1SdVcwmM7cAtXxgN0VtzMXyXvsJiHspnLuJS9LP1NkQTFHgZkPHW8qPG6qH8Mqz1aHhLpM8UuTngKpApC01GUPoEQ1GcgiWv6gERkTEYtvtIfrIZ9hApz6hItyayRe0ABo5nQ.M-SVFddYUg9rj1mq9oKfyw",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{api_environment}}users/me?caller_name=postman",
+					"host": [
+						"{{api_environment}}users"
+					],
+					"path": [
+						"me"
+					],
+					"query": [
+						{
+							"key": "caller_name",
+							"value": "postman"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get_users",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let responseData=pm.response.json();",
+							"console.log(responseData);",
+							"pm.environment.set(\"user\", responseData.nickname);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "x-icyte-token-auth={{token}}",
+						"type": "text"
+					},
+					{
+						"key": "authorization",
+						"value": "{{authorization}}",
+						"type": "default",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{api_environment}}users/users",
+					"host": [
+						"{{api_environment}}users"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "FIlter_users",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let responseData=pm.response.json();",
+							"console.log(responseData);",
+							"pm.environment.set(\"user\", responseData.nickname);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "x-icyte-token-auth={{token}}",
+						"type": "text"
+					},
+					{
+						"key": "authorization",
+						"value": "{{authorization}}",
+						"type": "default",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"{{email}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{api_environment}}users/users/email",
+					"host": [
+						"{{api_environment}}users"
+					],
+					"path": [
+						"users",
+						"email"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post_change_password",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let responseData=pm.response.json();",
+							"console.log(responseData);",
+							"pm.environment.set(\"token\", responseData.access_token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "x-icyte-token-auth={{token}}",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"previous_password\": \"{{password}}\",\n  \"new_password\": \"{{password}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{api_environment}}users/change_password",
+					"host": [
+						"{{api_environment}}users"
+					],
+					"path": [
+						"change_password"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post_forgot_password",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let responseData=pm.response.json();",
+							"console.log(responseData);",
+							"pm.environment.set(\"token\", responseData.access_token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"{{email}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{api_environment}}users/forgot_password",
+					"host": [
+						"{{api_environment}}users"
+					],
+					"path": [
+						"forgot_password"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post_confirm_password",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let responseData=pm.response.json();",
+							"console.log(responseData);",
+							"pm.environment.set(\"token\", responseData.access_token);",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200,500]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"{{email}}\",\n  \"password\": \"{{password}}\",\n  \"confirm_code\":\"823948\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{api_environment}}users/confirm_forgot_password",
+					"host": [
+						"{{api_environment}}users"
+					],
+					"path": [
+						"confirm_forgot_password"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post_reset_password",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let responseData=pm.response.json();",
+							"console.log(responseData);",
+							"pm.environment.set(\"token\", responseData.access_token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "{{authorization}}",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"{{email}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{api_environment}}users/admin_reset_password",
+					"host": [
+						"{{api_environment}}users"
+					],
+					"path": [
+						"admin_reset_password"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete_user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let responseData=pm.response.json();",
+							"console.log(responseData);",
+							"pm.environment.set(\"user\", responseData.nickname);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "x-icyte-token-auth={{token}}",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "authorization",
+						"value": "{{authorization}}",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"{{email}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{api_environment}}users/",
+					"host": [
+						"{{api_environment}}users"
+					],
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post_new_users",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let responseData=pm.response.json();",
+							"console.log(responseData);",
+							"pm.environment.set(\"token\", responseData.access_token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "{{authorization}}",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"nickname\": \"{{nickname}}\",\n  \"email\": \"{{new_email}}\",\n  \"password\": \"{{new_password}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{api_environment}}users/",
+					"host": [
+						"{{api_environment}}users"
+					],
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Disable_user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let responseData=pm.response.json();",
+							"console.log(responseData);",
+							"pm.environment.set(\"user\", responseData.nickname);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "x-icyte-token-auth={{token}}",
+						"type": "text"
+					},
+					{
+						"key": "authorization",
+						"value": "{{authorization}}",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"{{new_email}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{api_environment}}users/disable",
+					"host": [
+						"{{api_environment}}users"
+					],
+					"path": [
+						"disable"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post_enable_user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let responseData=pm.response.json();",
+							"console.log(responseData);",
+							"pm.environment.set(\"token\", responseData.access_token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "{{authorization}}",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"{{new_email}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{api_environment}}users/enable",
+					"host": [
+						"{{api_environment}}users"
+					],
+					"path": [
+						"enable"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post_login_session",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let responseData=pm.response.json();",
+							"console.log(responseData);",
+							"pm.environment.set(\"session\", responseData.session);",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"{{email}}\",\n  \"password\": \"{{password}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{api_environment}}users/login",
+					"host": [
+						"{{api_environment}}users"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post_challenge",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let responseData=pm.response.json();",
+							"console.log(responseData);",
+							"pm.environment.set(\"token\", responseData.access_token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"{{email}}\",\n  \"password\": \"{{password}}\",\n  \"session\":\"{{session}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{api_environment}}users/challenge",
+					"host": [
+						"{{api_environment}}users"
+					],
+					"path": [
+						"challenge"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update_user_attributes",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "{{authorization}}",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"{{email}}\",\n  \"attribute\": \"email_verified\",\n  \"value\": \"true\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{api_environment}}users/attributes",
+					"host": [
+						"{{api_environment}}users"
+					],
+					"path": [
+						"attributes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User_attributes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{api_environment}}users/attributes/{{email}}",
+					"host": [
+						"{{api_environment}}users"
+					],
+					"path": [
+						"attributes",
+						"{{email}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post_users_user_events",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let responseData=pm.response.json();",
+							"console.log(responseData);",
+							"pm.environment.set(\"token\", responseData.access_token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"{{email}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{api_environment}}users/user/events",
+					"host": [
+						"{{api_environment}}users"
+					],
+					"path": [
+						"user",
+						"events"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Import_users",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "multipart/form-data"
+					},
+					{
+						"key": "authorization",
+						"value": "{{authorization}}",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "csv_file",
+							"description": "(Required) ",
+							"type": "file",
+							"src": "/Users/jhonnyreynolds/Documents/single-sign-on-service/app/test/e2e/users.csv"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{api_environment}}users/import",
+					"host": [
+						"{{api_environment}}users"
+					],
+					"path": [
+						"import"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cognito_job_import_status",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let responseData=pm.response.json();",
+							"console.log(responseData);",
+							"pm.environment.set(\"user\", responseData.nickname);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "x-icyte-token-auth={{token}}",
+						"type": "text"
+					},
+					{
+						"key": "authorization",
+						"value": "{{authorization}}",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{api_environment}}users/cognito/job_import/status",
+					"host": [
+						"{{api_environment}}users"
+					],
+					"path": [
+						"cognito",
+						"job_import",
+						"status"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get_logout",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let responseData=pm.response.json();",
+							"console.log(responseData);",
+							"pm.environment.set(\"user\", responseData.nickname);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "x-icyte-token-auth={{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Cookie",
+						"value": "x-icyte-refresh-auth-dev=eyJjdHkiOiJKV1QiLCJlbmMiOiJBMjU2R0NNIiwiYWxnIjoiUlNBLU9BRVAifQ.bJBoUKPq55vlcNK_JSEhTI1M1xKgcyoRUuG-pF1TQjKyy5imTgYCYqiFm5fhNdDK4EES-eYSJQTfYWhEKKu-i9wTtiftIvviBySxMNWtC2w8qCs201iRJF54IqCeXO__5ZxFdP7rskmK3C2RVpH1r7zTeqooPjLNtLA8lF-n6986NSST4XaPa4KWrcpTosSGqekNJsL-D9J7Gq3ut8M3oARHLzquTznrvOg45gUq6sQxsucPzfuPr2dULX0-v9XXjL3IhIWBwQ0Kah4Lo-P81QlPEF6UAYVOP7wbqj_tpBwqq8Js9TcNPoRGLqII4h5byhrp9GsZ3XH4vg1JvSnKGw.7MJFmmbsosu81pBV.d6qa_rscASmoo3poEcqYYKWdZwpqwxIdN8xXnUpYWV9LJyU5uv_3Bpm6Inp2aLezB5nEZyG0Umkd6oc7PNr1LrjMs-KqleICVUIIRX5o8amV8RpKD-OCtqhvmlXvbQ2YCTfEappjUkDuz6Zl9HLkGnvzhifqC7FLfj1WoRiGIH2qdLMAIdvstI92LFOllcEWJfVBhFI8CWTyrvo7iyLqnYfnEXCoF8Ds6VxIaMZWbzT0hhNrPlLhMv5f8XigP3kEhu2gb6Af-2m4OzacnEtt0OaLVLF4zn4Gsqfl48sykiwJdzVH4Y4Zc9UOt26bN0iq0ghaNfgcgC7s-Em6i59JwGdNIT1g2qNlX3QzSVNchOfVcNmE7RwZZwKfPP3IEIJteWU-fecY76ECOcTwc4IKzazT8AWlDoZjhX5HG5Ez4GUSnqG_WOaOkSN1jcP2Gvw6OUX5gYrnsEaVNrHFCDQeZEPD6VgpDDkpMz0Y_QnmligNvmvxClq-SeQEULEciqKYCf8PCSJ1EfH1UPkoiAz0sePZ2PAaxdzlIymL9Q9LEUcFHQCJq8dmpP4352DmTOm; x-icyte-token-auth-dev=eyJraWQiOiI3S29xUjYwSlVsSVZaclhUenAzRWhpbEdnbTVPQVdqOW50K3V1UzdNK0cwPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiJjMmFhYTcwOC0zNGU0LTRiZjktYjkxYS0yNGEwM2QxODgwOTYiLCJldmVudF9pZCI6IjUzYjBjZDdiLWJkNWMtNGI4YS1hNTI3LWVmZDZlZTVlMGRmMyIsInRva2VuX3VzZSI6ImFjY2VzcyIsInNjb3BlIjoiYXdzLmNvZ25pdG8uc2lnbmluLnVzZXIuYWRtaW4iLCJhdXRoX3RpbWUiOjE2NjgxODA3MzMsImlzcyI6Imh0dHBzOlwvXC9jb2duaXRvLWlkcC51cy1lYXN0LTEuYW1hem9uYXdzLmNvbVwvdXMtZWFzdC0xXzk2Vzl3UVl5RCIsImV4cCI6MTY2ODE4NDMzMywiaWF0IjoxNjY4MTgwNzMzLCJqdGkiOiJlNWNhYTliMC1jYmFjLTQ3YjUtYmNhZC1lMDQ2MzRmZDg3MzgiLCJjbGllbnRfaWQiOiIydGtjNWhsYXJlazltbmZlY2lnaTYyN3NhNyIsInVzZXJuYW1lIjoiYzJhYWE3MDgtMzRlNC00YmY5LWI5MWEtMjRhMDNkMTg4MDk2In0.DMKqt22sAvdWG7srtv5-VTLmnTkIyeFFjiz5Niz_RWdijgBNXtPD4qABu1Mp9J_CwkZhu9vJ-RFEre4eIEEvkSe4EG2FH-YYnud5rJEOqCArF1uTY2WBOUJrixbO3LirneqAT0C5GnYTgTlVO1E_qCPjCwCu1LpG_miNpvF0zKFl_EX92vAo7QaM1YN_jyYR0YYj5idLHCcNCNZpi3Vzj2GLqy7Ovm7RlddcRBq_9nM1H1WFZPAitl03VbamWWiW1Hor18JEgShS1UDXFu-mF08yG0lhDI5HHYg1SaCgAHwPBIUTQwfqpGp0i9jxZiEXmDy_CxZkSTSMb_eweRwHPA",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "{{api_environment}}users/logout",
+					"host": [
+						"{{api_environment}}users"
+					],
+					"path": [
+						"logout"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
