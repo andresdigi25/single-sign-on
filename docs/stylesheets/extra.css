@@ -1,0 +1,202 @@
+/* Custom styles for SSO API documentation */
+
+/* Brand colors */
+:root {
+  --sso-primary: #1976d2;
+  --sso-secondary: #0d47a1;
+  --sso-accent: #42a5f5;
+  --sso-success: #4caf50;
+  --sso-warning: #ff9800;
+  --sso-error: #f44336;
+}
+
+/* Custom header styling */
+.md-header {
+  background: linear-gradient(135deg, var(--sso-primary), var(--sso-secondary));
+}
+
+/* Code blocks enhancement */
+.highlight {
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.highlight pre {
+  margin: 0;
+  border-radius: 0;
+}
+
+/* Admonition customization */
+.md-typeset .admonition.note,
+.md-typeset .admonition.seealso {
+  border-color: var(--sso-primary);
+}
+
+.md-typeset .admonition.tip,
+.md-typeset .admonition.hint,
+.md-typeset .admonition.important {
+  border-color: var(--sso-success);
+}
+
+.md-typeset .admonition.warning,
+.md-typeset .admonition.caution,
+.md-typeset .admonition.attention {
+  border-color: var(--sso-warning);
+}
+
+.md-typeset .admonition.danger,
+.md-typeset .admonition.error {
+  border-color: var(--sso-error);
+}
+
+/* Environment badges */
+.env-badge {
+  display: inline-block;
+  padding: 0.2em 0.6em;
+  margin: 0 0.2em;
+  font-size: 0.75em;
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: 0.25rem;
+  color: #fff;
+}
+
+.env-badge.dev {
+  background-color: #17a2b8;
+}
+
+.env-badge.test {
+  background-color: #ffc107;
+  color: #212529;
+}
+
+.env-badge.uat {
+  background-color: #fd7e14;
+}
+
+.env-badge.prod {
+  background-color: #dc3545;
+}
+
+/* API endpoint styling */
+.api-endpoint {
+  background-color: var(--md-code-bg-color);
+  border: 1px solid var(--md-default-fg-color--lighter);
+  border-radius: 4px;
+  padding: 0.5em 1em;
+  margin: 1em 0;
+  font-family: var(--md-code-font);
+}
+
+.api-endpoint .method {
+  font-weight: bold;
+  padding: 0.2em 0.4em;
+  border-radius: 3px;
+  margin-right: 0.5em;
+  font-size: 0.8em;
+}
+
+.api-endpoint .method.get {
+  background-color: #61affe;
+  color: white;
+}
+
+.api-endpoint .method.post {
+  background-color: #49cc90;
+  color: white;
+}
+
+.api-endpoint .method.put {
+  background-color: #fca130;
+  color: white;
+}
+
+.api-endpoint .method.delete {
+  background-color: #f93e3e;
+  color: white;
+}
+
+/* Table enhancements */
+.md-typeset table:not([class]) {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.md-typeset table:not([class]) th {
+  background-color: var(--sso-primary);
+  color: white;
+  font-weight: 600;
+}
+
+.md-typeset table:not([class]) tr:nth-child(even) {
+  background-color: var(--md-default-bg-color);
+}
+
+/* Status indicators */
+.status-indicator {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 0.5em;
+}
+
+.status-indicator.healthy {
+  background-color: var(--sso-success);
+}
+
+.status-indicator.warning {
+  background-color: var(--sso-warning);
+}
+
+.status-indicator.error {
+  background-color: var(--sso-error);
+}
+
+/* Quick reference cards */
+.quick-ref-card {
+  border: 1px solid var(--md-default-fg-color--lighter);
+  border-radius: 8px;
+  padding: 1em;
+  margin: 1em 0;
+  background-color: var(--md-code-bg-color);
+}
+
+.quick-ref-card h3 {
+  margin-top: 0;
+  color: var(--sso-primary);
+}
+
+/* Responsive improvements */
+@media screen and (max-width: 768px) {
+  .api-endpoint {
+    padding: 0.3em 0.6em;
+    font-size: 0.9em;
+  }
+  
+  .env-badge {
+    display: block;
+    margin: 0.2em 0;
+    text-align: left;
+  }
+}
+
+/* Print styles */
+@media print {
+  .md-header,
+  .md-tabs,
+  .md-footer {
+    display: none !important;
+  }
+  
+  .md-sidebar {
+    display: none !important;
+  }
+  
+  .md-content {
+    margin: 0 !important;
+  }
+}
