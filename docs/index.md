@@ -183,7 +183,7 @@ Environment-specific configurations:
 
 ### Getting Help
 1. **Documentation**: Check this documentation first
-2. **FAQ**: Common questions are answered in the [FAQ](FAQ.md)
+2. **FAQ**: Common questions are answered in the [FAQ](faq.md)
 3. **Issues**: Create an issue in the project repository
 4. **Security**: Use designated security channels for security issues
 
